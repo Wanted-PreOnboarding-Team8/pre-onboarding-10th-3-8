@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, FormEvent } from 'react';
 import { FaPlusCircle, FaSpinner } from 'react-icons/fa';
 import { createTodo } from '../api/todo';
 import useFocus from '../hooks/useFocus';
+import useTodoHook from '../hooks/useTodoHook';
 import { TodoItemsProps } from './TodoItem';
 import { BiSearch } from 'react-icons/bi';
 import DropdownList from './DropdownList';
@@ -16,48 +17,21 @@ const PAGE_INITIAL_NUMBER = 1;
 
 const InputTodo = ({ setTodos }: Pick<TodoItemsProps, 'setTodos'>) => {
   const [inputText, setInputText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const { dropdown, setDropdown, dropdownLoading, getDropdown, page, setPage } =
     useGetDropdownList();
   const { focusRef } = useFocus();
   const dbounce = debounce();
+  const { addTodo, submitLoading } = useTodoHook({ setTodos });
 
-  const handleSubmit = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      try {
-        e.preventDefault();
-        setIsLoading(true);
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    addTodo(inputText);
+    setInputText('');
+  };
 
-        const trimmed = inputText.trim();
-        if (!trimmed) {
-          return alert('Please write something');
-        }
-
-        const newItem = { title: trimmed };
-        const { data } = await createTodo(newItem);
-
-        if (data) {
-          return setTodos(prev => [...prev, data]);
-        }
-      } catch (error) {
-        console.error(error);
-        alert('Something went wrong.');
-      } finally {
-        setInputText('');
-        setIsLoading(false);
-      }
-    },
-    [inputText, setTodos],
-  );
-
-  // API 호출
   const handleSearch = async (inputText: string) => {
     await getDropdown(inputText);
   };
-
-  useEffect(() => {
-    handleSearch(inputText);
-  }, [page]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
@@ -65,6 +39,10 @@ const InputTodo = ({ setTodos }: Pick<TodoItemsProps, 'setTodos'>) => {
     setPage(PAGE_INITIAL_NUMBER);
     dbounce(handleSearch, e.target.value);
   };
+
+  useEffect(() => {
+    handleSearch(inputText);
+  }, [page]);
 
   return (
     <>
@@ -76,9 +54,9 @@ const InputTodo = ({ setTodos }: Pick<TodoItemsProps, 'setTodos'>) => {
           ref={focusRef}
           value={inputText}
           onChange={handleOnChange}
-          disabled={isLoading}
+          disabled={submitLoading}
         />
-        {!isLoading ? (
+        {!submitLoading ? (
           <button className="input-submit" type="submit">
             <FaPlusCircle className="btn-plus" />
           </button>
