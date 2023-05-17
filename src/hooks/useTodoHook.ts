@@ -17,8 +17,8 @@ export default function useTodoHook({ setTodos }: UseTodoHookProps) {
         if (!title) {
           return alert('Please write something');
         }
-        const newTodo = { title };
-        const { data } = await createTodo(newTodo);
+
+        const { data } = await createTodo({ title });
 
         setTodos(prev => [...prev, data]);
       } catch (error) {
@@ -39,6 +39,7 @@ export default function useTodoHook({ setTodos }: UseTodoHookProps) {
         setTodos(prev => prev.filter(item => item.id !== id));
       } catch (error) {
         console.error(error);
+        setRemoveLoading(false);
         alert('Something went wrong.');
       }
     },
