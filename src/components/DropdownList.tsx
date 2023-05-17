@@ -14,6 +14,7 @@ interface DropdownListProps {
   setInputText: React.Dispatch<React.SetStateAction<string>>;
   dropdownLoading: boolean;
 }
+
 const DropdownList = ({
   inputText,
   setTodos,
@@ -37,7 +38,6 @@ const DropdownList = ({
             <DropdownItem
               key={idx}
               item={item}
-              idx={idx}
               inputText={inputText}
               setInputText={setInputText}
               setTodos={setTodos}
