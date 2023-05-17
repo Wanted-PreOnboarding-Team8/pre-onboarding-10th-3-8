@@ -22,8 +22,7 @@ const DropdownList = ({
   dropdown,
   dropdownLoading,
 }: DropdownListProps) => {
-  const [shouldStop, setShouldStop] = useState(false);
-  const { observer, isIntersecting } = useObserver(shouldStop, setPage);
+  const { observer, isIntersecting } = useObserver(setPage);
 
   if (!dropdown.length) {
     return null;
