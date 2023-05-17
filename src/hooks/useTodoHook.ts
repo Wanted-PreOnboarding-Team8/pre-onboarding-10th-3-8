@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useEffect, type FC } from 'react';
-import { createTodo, deleteTodo, getTodoList } from '../api/todo';
+import React, { useState, useCallback } from 'react';
+import { createTodo, deleteTodo } from '../api/todo';
 import { Todo } from '../types/todoType';
 
 interface UseTodoHookProps {

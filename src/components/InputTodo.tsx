@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useState, FormEvent } from 'react';
+import React, { useEffect, useState, FormEvent } from 'react';
 import { FaPlusCircle, FaSpinner } from 'react-icons/fa';
-import { createTodo } from '../api/todo';
 import useFocus from '../hooks/useFocus';
 import useTodoHook from '../hooks/useTodoHook';
 import { TodoItemsProps } from './TodoItem';
