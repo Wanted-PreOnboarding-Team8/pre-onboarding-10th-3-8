@@ -8,7 +8,7 @@
 }
 
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
+  font-family: 'Segoe UI', Arial, sans-serif;
   line-height: 1.4;
   color: #444;
   background: #fff;
@@ -31,11 +31,22 @@ body {
 
 .form-container {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   display: flex;
-  border-radius: calc(0.5 * 100px);
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.38);
+  border-radius: 5px;
   justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+}
+
+.form-container:hover {
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.form-container:hover input::placeholder {
+  color: #181818;
 }
 
 .input-text {
@@ -44,8 +55,20 @@ body {
   width: 85%;
   padding-right: 5px;
   padding-left: 10px;
-  border-radius: calc(0.5 * 100px);
   background-color: transparent;
+  text-overflow: ellipsis;
+}
+
+.input-text::placeholder {
+  color: #9f9f9f;
+}
+
+.input-text:focus::placeholder {
+  color: #181818;
+}
+
+.form-container:focus-within {
+  border: 1px solid #bababa;
 }
 
 .input-submit {
@@ -60,6 +83,11 @@ body {
   height: 45px;
   outline: none;
   border: none;
+}
+
+.search-icon {
+  font-size: 20px;
+  color: #818181;
 }
 
 .btn-plus {
@@ -148,4 +176,63 @@ body {
   width: 100%;
   padding: 10px;
   border: 1px solid #dfdfdf;
+}
+
+.dropdown-container {
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid #e2e2e2;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10px;
+}
+
+.dropdown-list {
+  border: 1px solid white;
+  max-height: 200px;
+  padding: 10px 5px 0 5px;
+  overflow-y: scroll;
+}
+
+.dropdown-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+  height: 72px;
+  background: rgba(0, 0, 0, 0.48);
+  border-radius: 2px;
+}
+
+.dropdown-item {
+  padding-top: 9px;
+  height: 40px;
+  align-items: center;
+  padding-left: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.dropdown-item-hover:hover {
+  opacity: 0.85;
+  background-color: #eaeaea;
+}
+
+.highlight {
+  color: #2cc9ba;
+}
+
+.clicked-item {
+  background-color: #d5f4f1;
+}
+
+.moreIcon {
+  color: #a5a5a5;
+  font-size: 20px;
+  text-align: center;
+  align-self: center;
 }
