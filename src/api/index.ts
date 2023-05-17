@@ -14,7 +14,12 @@ const baseInstance = axios.create({
   },
 });
 
-baseInstance.interceptors.response.use(({ data }) => data);
+baseInstance.interceptors.response.use(({ data, status }) => {
+  if (status === 200) {
+    return data;
+  }
+  throw new Error('something went wrong');
+});
 
 const apiRequest = {
   get: (url: string) => baseInstance.get(url),
