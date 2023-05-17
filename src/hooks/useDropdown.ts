@@ -5,21 +5,30 @@ const RESOURCE = '/search';
 const GET_PAGE_LIMIT = 10;
 const INITIAL_INDEX = 1;
 
+interface DropdownState {
+  dropdown: string[];
+  total: number;
+}
+
 export const useGetDropdownList = () => {
   const [dropdownLoading, setDropdownLoading] = useState(false);
-  const [dropdown, setDropdown] = useState<string[]>([]);
+  const [dropdown, setDropdown] = useState<DropdownState>({ total: 0, dropdown: [] });
   const [page, setPage] = useState(INITIAL_INDEX);
 
-  const getDropdown = async (q: string) => {
+  const getDropdown = async (query: string) => {
+    if (dropdown.total && dropdown.total === dropdown.dropdown.length) return;
     try {
-      if (!q) return;
+      if (!query) return;
       setDropdownLoading(true);
 
       const response = await apiRequest.get(
-        `${RESOURCE}?q=${q}&page=${page}&limit=${GET_PAGE_LIMIT}`,
+        `${RESOURCE}?q=${query}&page=${page}&limit=${GET_PAGE_LIMIT}`,
       );
 
-      setDropdown(prev => [...prev, ...response.data.result]);
+      setDropdown((prev: DropdownState) => ({
+        total: response.data.total,
+        dropdown: [...prev.dropdown, ...response.data.result],
+      }));
       setDropdownLoading(false);
     } catch (error) {
       console.error(error);
