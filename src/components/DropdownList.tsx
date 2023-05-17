@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FaSpinner } from 'react-icons/fa';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import DropdownItem from './DropdownItem';
-import { useGetDropdownList } from 'hooks/useDropdown';
 import { Todo } from 'types/todoType';
 import useObserver from '../hooks/useObserver';
 

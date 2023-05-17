@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, type Ref } from 'react';
+import React from 'react';
 import { highlightedText } from '../utils/highlightedText';
 import { createTodo } from '../api/todo';
 import { Todo } from 'types/todoType';
