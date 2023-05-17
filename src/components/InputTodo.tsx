@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FaPlusCircle, FaSpinner } from 'react-icons/fa';
 import { createTodo } from '../api/todo';
 import useFocus from '../hooks/useFocus';
@@ -7,6 +7,12 @@ import { BiSearch } from 'react-icons/bi';
 import DropdownList from './DropdownList';
 import debounce from 'hooks/useDebounce';
 import { useGetDropdownList } from 'hooks/useDropdown';
+
+const DROPDOWN_INITIAL_STATE = {
+  total: 0,
+  dropdown: [],
+};
+const PAGE_INITIAL_NUMBER = 1;
 
 const InputTodo = ({ setTodos }: Pick<TodoItemsProps, 'setTodos'>) => {
   const [inputText, setInputText] = useState('');
@@ -22,12 +28,12 @@ const InputTodo = ({ setTodos }: Pick<TodoItemsProps, 'setTodos'>) => {
         e.preventDefault();
         setIsLoading(true);
 
-        // const trimmed = inputText.trim();
-        if (!inputText) {
+        const trimmed = inputText.trim();
+        if (!trimmed) {
           return alert('Please write something');
         }
 
-        const newItem = { title: inputText };
+        const newItem = { title: trimmed };
         const { data } = await createTodo(newItem);
 
         if (data) {
@@ -55,7 +61,8 @@ const InputTodo = ({ setTodos }: Pick<TodoItemsProps, 'setTodos'>) => {
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputText(e.target.value);
-    setDropdown([]);
+    setDropdown(DROPDOWN_INITIAL_STATE);
+    setPage(PAGE_INITIAL_NUMBER);
     dbounce(handleSearch, e.target.value);
   };
 
@@ -82,7 +89,7 @@ const InputTodo = ({ setTodos }: Pick<TodoItemsProps, 'setTodos'>) => {
       {inputText && (
         <DropdownList
           inputText={inputText}
-          dropdown={dropdown}
+          dropdown={dropdown.dropdown}
           setPage={setPage}
           setInputText={setInputText}
           setTodos={setTodos}
