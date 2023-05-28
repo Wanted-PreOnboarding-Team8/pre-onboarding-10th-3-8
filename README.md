@@ -23,3 +23,6 @@ npm run start
 # OR
 yarn start
 ```
+
+### 기능 구현 사항을 정리한 건 Issues에서 확인 가능합니다.
+[이슈] (https://github.com/Wanted-PreOnboarding-Team8/pre-onboarding-10th-3-8/issues/4)
